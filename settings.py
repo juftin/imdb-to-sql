@@ -1,19 +1,33 @@
+import os
+
+
 class DatabaseTypes:
-	SQLITE		= 0
-	MYSQL 		= 1
-	POSTGRES	= 2
+    SQLITE		= 0
+    MYSQL 		= 1
+    POSTGRES	= 2
+
+
+DATABASE_TYPE = os.getenv("DATABASE_TYPE", "SQLITE")               # database type, one of DatabaseTypes
+DATABASE_DATABASE = os.getenv("DATABASE_DATABASE", "imdb_data")    # database name
+DATABASE_ENCODING = os.getenv("DATABASE_ENCODING", "utf-8")        # used to pre-encode the queries to drop any invalid characters
+
+DATABASE_HOST = os.getenv("DATABASE_HOST", "127.0.0.1")            # database host
+DATABASE_USER = os.getenv("DATABASE_USER", "SQLITE")               # database username
+DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "SQLITE")       # database password
+DATABASE_CLEAR_OLD_DB = os.getenv("DATABASE_CLEAR_OLD_DB", False)  # clear old database information if exists
+
 
 # script configuration
 # database options
 class Database:
-	type 		= DatabaseTypes.SQLITE# database type, one of DatabaseTypes
-	database 	= "imdb_data"			# database name
-	encoding 	= "utf-8"				# used to pre-encode the queries to drop any invalid characters
-										# for the database type
-	host 		= "127.0.0.1"			# database host
-	user 		= "postgres"			# database username
-	password 	= "password"			# database password
-	clear_old_db = False				# clear old database information if exists
+    type = getattr(DatabaseTypes, DATABASE_TYPE)
+    database = DATABASE_DATABASE
+    encoding = DATABASE_ENCODING
+    host = DATABASE_ENCODING
+    user = DATABASE_ENCODING
+    password = DATABASE_ENCODING
+    clear_old_db = True if str(DATABASE_CLEAR_OLD_DB).lower() in ["true", "1", "yes"] else False
+
 
 # general options
 class Options:
